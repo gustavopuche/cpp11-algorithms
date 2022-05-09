@@ -74,6 +74,70 @@ void f(vector<Entry>& vec, list<Entry>& lst){
   unique_copy(vec.begin(),vec.end(),back_inserter(lst)); // don't copy adjacent equual elements.
 }
 
+// Type alias to hide typename C::iterator.
+template <typename T>
+using Iterator = typename T::iterator;
+
+// Return all occurrences of v in c.
+template<typename C, typename V>
+vector<Iterator<C>> find_all(C &c, V v) {
+  // vector<typename C::iterator> res; // vector provides move semantics.
+  vector<Iterator<C>> res; // vector provides move semantics.
+  
+  for (auto p = c.begin(); p!=c.end(); p++)
+  {
+    if (*p==v)
+      res.push_back(p);
+  }
+  
+  return res;
+}
+
+
+// Define output format for vectors.
+template<typename T>
+ostream &operator<<(ostream &os, const vector<T>& s) {
+  os << "(";
+  for (auto const x : s)
+    os << x << " ";
+  os << ")";
+  return os;
+}
+
+void iterator_tests() {
+  string m {"My name is Gus Eco And I am a robot game."};
+  for (auto p : find_all<string,char>(m,'a'))
+    if (*p!='a')
+      cerr << "a bug!\n";
+    else
+      cout << "Found: " << *p << endl;
+
+  list<double> ld {1.1,1.2,2.3,4.5,3.4,4.5,6.7,4.5};
+  for (auto p : find_all(ld,4.5))
+    if (*p!=4.5)
+      cerr << "list bug!\n";
+    else
+      cout << "Found in list: " << *p << endl;
+
+  vector<string> vs {"red","blue","green","orange","red","green","orange","orange","red"};
+  for (auto p : find_all(vs,"orange"))
+    if (*p!="orange")
+      cerr << "vector bug!\n";
+    else
+      cout << "Found in vector: " << *p << endl;
+
+  for (auto p : find_all(vs,"red"))
+    if (*p!="red")
+      cerr << "vector bug!\n";
+    else
+      cout << "Found in vector: " << *p << endl;
+
+  for (auto p : find_all(vs,"green"))
+    *p = "vert";
+
+  cout << vs << endl;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // MAIN FUNCTION
@@ -106,6 +170,8 @@ int main()
   print_book_list(phone_list);
   // input(phone_book);
   // print_book(phone_book);
-  
+
+  iterator_tests();
+
   return 0;
 }
