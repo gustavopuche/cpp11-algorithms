@@ -197,7 +197,6 @@ int test_istream_improve_2() {
   return !is.eof() || !os;               // return error state.  
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 // MAIN FUNCTION
@@ -205,32 +204,6 @@ int test_istream_improve_2() {
 ////////////////////////////////////////////////////////////////////////////////
 int main()
 {
-
-  // vector<Entry> phone_book = {
-  //   {"Pepe Phone",123456},
-  //   {"Betty Davis",345678},
-  //   {"Iron Man",234567},
-  //   {"Pepe Phone",123456},
-  //   {"Iron Man",234567},
-  //   {"Betty Davis",345678}
-  // };
-
-  // list<Entry> phone_list;
-
-  // cout << "Insert order.. " << endl << endl;
-  // print_book(phone_book);
-
-  // f(phone_book,phone_list);
-
-  // cout << "Ordered by name..." << endl << endl;
-  // print_book(phone_book);
-  // cout << "Ordered print finnished..." << endl;
-
-  // cout << "size of phone list:" << phone_list.size() << endl;
-  // print_book_list(phone_list);
-  // input(phone_book);
-  // print_book(phone_book);
-
   iterator_tests();
 
   *oo = "Hello, "; // meaning cout<<"Hello, "
