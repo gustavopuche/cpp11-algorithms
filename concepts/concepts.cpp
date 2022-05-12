@@ -1,11 +1,11 @@
-#include <concepts>
+#include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <list>
 #include <ostream>
-#include <set>
 #include <string>
 #include <vector>
+#include <ranges>
+#include <concepts>
 
 using namespace std;
 
@@ -13,7 +13,7 @@ using namespace std;
 // template <BoundedRange R>
 // requires Sortable<R>
 // void sort(R &r) {
-//   return sort(begin(r),end(r));  
+//   return sort(begin(r),end(r));
 // }
 
 template <typename C>
@@ -43,6 +43,19 @@ template <Sequence Seq, typename Num> Num sum(Seq s, Num v) {
   return v;
 }
 
+// Print phone list.
+template<template<class> class C,class T>
+ostream &operator<<(ostream &os, const C<T> &c) {
+  os << "{ ";
+  for (const auto& x : c)
+  {
+    os << x << " ";
+  }
+  os << "}";
+
+  return os;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // MAIN FUNCTION
@@ -50,15 +63,18 @@ template <Sequence Seq, typename Num> Num sum(Seq s, Num v) {
 ////////////////////////////////////////////////////////////////////////////////
 int main()
 {
-  vector<int> v{2,4,6,8,10};
+  vector<int> v{22,14,6,18,10};
   // list<double> l{0.5,0.7,1.4,1.7,1.8,2.3};
   // set<string> s{"Gustavo"," is programming"," hard ","in ","c++20"};
 
+  ranges::sort(v); // sort using ranges in c++20.
+  cout << "Sorted vector = " << v << endl;
+
   string line = "Gustavo is programming hard in c++20"s;
   auto letter = line[10];
-  
+
   string ini="";
-  
+
   int number = 0;
   double num_float = 0.0;
 
@@ -66,6 +82,6 @@ int main()
   // cout << "Sum of list is " << sum(l,num_float) << endl;
   // cout << "Sum of set is " << sum(s,ini) << endl;
   cout << "Sum of string is " << sum(line,letter) << endl;
-  
+
   return 0;
 }
