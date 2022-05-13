@@ -79,6 +79,13 @@ Val accumulate(const R &r, Val res = 0) {
   return res;
 }
 
+template <Range R, Number Val, typename F> // Range concept if defined up.
+Val accumulate(const R &r, Val res, F fn) {
+  for (auto p= begin(r); p!=end(r); ++p)
+    res = fn(res,*p);
+  return res;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // MAIN FUNCTION
@@ -94,6 +101,8 @@ int main()
   cout << "Sorted vector = " << v << endl;
 
   cout << "Accumulate of v is " << accumulate(v,0) << endl;
+
+  cout << "Multiplicative of v is " << accumulate(v,1,[](int res, int op){return res*op;}) << endl;
 
   string line = "Gustavo is programming hard in c++20"s;
   auto letter = line[10];
