@@ -56,6 +56,29 @@ ostream &operator<<(ostream &os, const C<T> &c) {
   return os;
 }
 
+template <typename N>
+concept Number = requires(N n) {
+  requires integral<N>;
+};
+
+template <typename R>
+concept Range = requires(R r) {
+  typename Value_type<R>;                     // S must hava a value type
+  typename Iterator_type<R>;                  // S must hava an iterator type
+
+  { begin(r) } -> same_as<Iterator_type<R>>;           // begin(a) must return an iterator
+  { end(r) } -> same_as<Iterator_type<R>>;             // end(a) must return an iterator
+
+  requires same_as<Value_type<R>, Value_type<Iterator_type<R>>>;
+};
+
+template <Range R, Number Val> // Range concept if defined up.
+Val accumulate(const R &r, Val res = 0) {
+  for (auto p= begin(r); p!=end(r); ++p)
+    res += *p;
+  return res;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // MAIN FUNCTION
@@ -69,6 +92,8 @@ int main()
 
   ranges::sort(v); // sort using ranges in c++20.
   cout << "Sorted vector = " << v << endl;
+
+  cout << "Accumulate of v is " << accumulate(v,0) << endl;
 
   string line = "Gustavo is programming hard in c++20"s;
   auto letter = line[10];
